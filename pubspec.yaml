@@ -37,7 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
   # device_installed_apps: ^1.0.1
-  device_apps: ^2.2.0
+  # installed_apps:
+  # device_apps: ^2.2.0
+  # package_info_plus: ^4.0.0
+  installed_apps: ^1.5.2
+
 
 dev_dependencies:
   flutter_test:
