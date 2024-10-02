@@ -108,10 +108,12 @@ import 'package:installed_apps/app_info.dart';
 import 'package:installed_apps/installed_apps.dart';
 
 class TestPage2 extends StatefulWidget {
-  final List<Map<String, dynamic>> installed_apps_info;
+  // final List<Map<String, dynamic>> installedAppsInfo;
+  final List<AppInfo> installedAppsInfo;
   const TestPage2({
     super.key,
-    required this.installed_apps_info,
+    // required this.installedAppsInfo,
+    required this.installedAppsInfo,
   });
 
   @override
@@ -121,36 +123,42 @@ class TestPage2 extends StatefulWidget {
 class _TestPage2State extends State<TestPage2> {
   final TextEditingController _searchController = TextEditingController();
 
-  List<Map<String, dynamic>> _found_apps = [];
+  // List<Map<String, dynamic>> _found_apps = [];
+  List<AppInfo> _foundApps = [];
   @override
   void initState() {
-    _found_apps = widget.installed_apps_info;
+    _foundApps = widget.installedAppsInfo;
     super.initState();
   }
 
-  void _runFilter(String enteredKeyword) {
-    // List<Map<String, dynamic>> results = [];
-    // if (enteredKeyword.isEmpty) {
-    //   results = widget.installed_apps_info;
-    // } else {
-    //   results = widget.installed_apps_info.where(test);  //.where((user)=>user['name']);
-    //   // results = widget.installed_apps_info.where((element) {
-    //   //   return element['name'].toLowerCase().contains(enteredKeyword.toLowerCase());
-    //   // });
-    // }
-    List<Map<String, dynamic>> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = widget.installed_apps_info;
-    } else {
-      results = widget.installed_apps_info.where((app) {
-        return app['name'].toLowerCase().contains(enteredKeyword.toLowerCase());
-      }).toList();
-    }
-  }
+  // void _runFilter(String enteredKeyword) {
+  //   // List<Map<String, dynamic>> results = [];
+  //   // if (enteredKeyword.isEmpty) {
+  //   //   results = widget.installedAppsInfo;
+  //   // } else {
+  //   //   results = widget.installedAppsInfo.where(test);  //.where((user)=>user['name']);
+  //   //   // results = widget.installedAppsInfo.where((element) {
+  //   //   //   return element['name'].toLowerCase().contains(enteredKeyword.toLowerCase());
+  //   //   // });
+  //   // }
+  //   List<Map<String, dynamic>> results = [];
+  //   if (enteredKeyword.isEmpty) {
+  //     results = widget.installedAppsInfo;
+  //   } else {
+  //     results = widget.installedAppsInfo.where((app) {
+  //       return app['name'].toLowerCase().contains(enteredKeyword.toLowerCase());
+  //     }).toList();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () {},
+        child: const Icon(Icons.settings, size: 32,),
+      ),
       body: Stack(
         children: [
           Image.asset(
@@ -166,7 +174,7 @@ class _TestPage2State extends State<TestPage2> {
                   padding: const EdgeInsets.all(16.0),
                   // #1
                   child: TextField(
-                    onChanged: (value) => _runFilter(value),
+                    // onChanged: (value) => _runFilter(value),
                     controller: _searchController,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
@@ -194,17 +202,18 @@ class _TestPage2State extends State<TestPage2> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    // itemCount: widget.installed_apps_info.length,
-                    itemCount: _found_apps.length,
+                    // itemCount: widget.installedAppsInfo.length,
+                    itemCount: _foundApps.length,
                     itemBuilder: (context, index) {
-                      String appName = _found_apps[index]['name'];
-                      String appVersionName = _found_apps[index]['versionName'];
-                      String appPackageName = _found_apps[index]['packageName'];
-                      BuiltWith appBuiltWith = _found_apps[index]['builtWith'];
-                      Uint8List? appIcon = _found_apps[index]['icon'];
-                      int appInstalledTimestamp =
-                          _found_apps[index]['installedTimestamp'];
-                      int appVersionCode = _found_apps[index]['versionCode'];
+                      String appName = _foundApps[index].name;
+                      Uint8List? appIcon =
+                          _foundApps[index].icon; //?? Icon(Icons.dangerous);
+                      String appPackageName = _foundApps[index].packageName;
+                      // String appVersionName = _foundApps[index].versionName;
+                      // BuiltWith appBuiltWith = _foundApps[index].builtWith;
+                      // int appInstalledTimestamp =
+                      //     _foundApps[index].installedTimestamp;
+                      // int appVersionCode = _foundApps[index].versionCode;
 
                       return GestureDetector(
                         onTap: () async {
@@ -227,7 +236,7 @@ class _TestPage2State extends State<TestPage2> {
                               //   height: 32,
                               //   child: Image.memory(appIcon),
                               // ),
-                              
+
                               SizedBox(
                                 width: 32,
                                 height: 32,
@@ -238,9 +247,9 @@ class _TestPage2State extends State<TestPage2> {
                                         size: 32,
                                       ), // Fallback icon
                               ),
-                              
+
                               const SizedBox(width: 20),
-                              
+
                               Expanded(
                                 child: Text(
                                   appName,

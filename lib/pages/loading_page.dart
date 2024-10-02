@@ -29,18 +29,20 @@ class _LoadingPageState extends State<LoadingPage> {
     List<Map<String, dynamic>> deviceInstalledAppsInfo = [];
     List<AppInfo> apps = await InstalledApps.getInstalledApps(true, true, "");
     // @me:
-    List<InstalledAppModel> installed_apps = [];
+    List<AppInfo> device_installed_apps_info = [];
+    // List<InstalledAppModel> installed_apps = [];
 
-    for (AppInfo a in apps) {
-      deviceInstalledAppsInfo.add({
-        'name': a.name, // string
-        'versionName': a.versionName, // string
-        'packageName': a.packageName, // String
-        'builtWith': a.builtWith, // BuiltWith
-        'icon': a.icon, // Uint8List?
-        'installedTimestamp': a.installedTimestamp, // int
-        'versionCode': a.versionCode, // int
-      });
+    for (AppInfo app in apps) {
+      device_installed_apps_info.add(app);
+      // deviceInstalledAppsInfo.add({
+      //   'name': a.name, // string
+      //   'versionName': a.versionName, // string
+      //   'packageName': a.packageName, // String
+      //   'builtWith': a.builtWith, // BuiltWith
+      //   'icon': a.icon, // Uint8List?
+      //   'installedTimestamp': a.installedTimestamp, // int
+      //   'versionCode': a.versionCode, // int
+      // });
     }
 
     setState(() {
@@ -52,7 +54,8 @@ class _LoadingPageState extends State<LoadingPage> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => TestPage2(
-            installed_apps_info: deviceInstalledAppsInfo,
+            // installed_apps_info: deviceInstalledAppsInfo,
+            installedAppsInfo: device_installed_apps_info,
           ),
         ),
       );
