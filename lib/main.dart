@@ -1,3 +1,4 @@
+import 'package:app_minimalist_launcher/pages/home_page.dart';
 import 'package:app_minimalist_launcher/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 

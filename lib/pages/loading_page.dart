@@ -1,9 +1,11 @@
+// TODO: "Background-Image: Cache"
+
+import 'package:app_minimalist_launcher/models/indiv_app.dart';
 import 'package:app_minimalist_launcher/pages/test_pages/test_page_2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:installed_apps/installed_apps.dart';
 import 'package:installed_apps/app_info.dart';
-
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -13,7 +15,6 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-
   bool _isLoading = true;
 
   @override
@@ -27,12 +28,18 @@ class _LoadingPageState extends State<LoadingPage> {
 
     List<Map<String, dynamic>> deviceInstalledAppsInfo = [];
     List<AppInfo> apps = await InstalledApps.getInstalledApps(true, true, "");
+    // @me:
+    List<InstalledAppModel> installed_apps = [];
 
     for (AppInfo a in apps) {
       deviceInstalledAppsInfo.add({
-        'name': a.name,
-        'icon': a.icon,
-        'builtWith': a.builtWith,
+        'name': a.name, // string
+        'versionName': a.versionName, // string
+        'packageName': a.packageName, // String
+        'builtWith': a.builtWith, // BuiltWith
+        'icon': a.icon, // Uint8List?
+        'installedTimestamp': a.installedTimestamp, // int
+        'versionCode': a.versionCode, // int
       });
     }
 
@@ -50,9 +57,8 @@ class _LoadingPageState extends State<LoadingPage> {
         ),
       );
     });
-  } 
-  
-  
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,13 +71,14 @@ class _LoadingPageState extends State<LoadingPage> {
               color: Colors.redAccent,
             ),
             SizedBox(height: 20),
-            Text('L O A D I N G . . .', style: GoogleFonts.protestGuerrilla(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-            ),),
+            Text(
+              'L O A D I N G . . .',
+              style: GoogleFonts.protestGuerrilla(
+                  fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),
     );
   }
-} 
+}
